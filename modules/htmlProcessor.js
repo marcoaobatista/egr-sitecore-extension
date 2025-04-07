@@ -16,7 +16,7 @@ export const HtmlProcessor = {
     },
 
     convertBulletsToLists(container) {
-        const bulletPatterns = /^[\u2022\u25E6\u2043\u2219\u00B7\u00A0\*\-‣·]+/;
+        const bulletPatterns = /^[\u25CF\u2022\u25E6\u2043\u2219\u00B7\u00A0\*\-‣·]+/;
         let elements = Array.from(container.children);
         let resultHTML = '';
         let listItems = [];
@@ -27,22 +27,26 @@ export const HtmlProcessor = {
             let text = el.textContent.trim();
             let match = text.match(bulletPatterns);
     
-            if (match) {
-                if (!inList) {
-                    resultHTML += '<ul>';
-                    inList = true;
-                }
-                let contentWithoutBullet = html.replace(bulletPatterns, '');
-                listItems.push(`<li>${contentWithoutBullet}</li>`);
-            } else {
-                if (inList) {
-                    resultHTML += listItems.join('') + '</ul>';
-                    inList = false;
-                    listItems = [];
-                }
-                resultHTML += `<p>${html}</p>`;
+        // handle existing ul tags
+        if (el.tagName.toLowerCase() === 'ul') {  
+            resultHTML += el.outerHTML;
+        } 
+        else if (match) {
+            if (!inList) {
+                resultHTML += '<ul>';
+                inList = true;
             }
-        });
+            let contentWithoutBullet = html.replace(bulletPatterns, '');
+            listItems.push(`<li>${contentWithoutBullet}</li>`);
+        } else {
+            if (inList) {
+                resultHTML += listItems.join('') + '</ul>';
+                inList = false;
+                listItems = [];
+            } 
+            resultHTML += `<p>${html}</p>`;
+        }
+    });
     
         if (inList) {
             resultHTML += listItems.join('') + '</ul>';
