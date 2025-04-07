@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Sitecore EGR Toolbar Extension",
+  "version": "1.0",
+  "description": "Processes HTML from clipboard for Sitecore",
+  "permissions": [
+      "activeTab",
+      "scripting",
+      "clipboardRead",
+      "clipboardWrite"
+  ],
+  "host_permissions": [
+      "https://webcms.sitecore.msu.edu/sitecore/*",
+      "https://msutoday.msu.edu/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://webcms.sitecore.msu.edu/sitecore/*", "https://msutoday.msu.edu/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["modules/*.js"],
+      "matches": ["*://webcms.sitecore.msu.edu/*", "*://msutoday.msu.edu/*"]
+    }
+  ]
+}
