@@ -16,13 +16,13 @@
   "content_scripts": [
     {
       "matches": ["https://webcms.sitecore.msu.edu/sitecore/*", "https://msutoday.msu.edu/*"],
-      "js": ["content.js"],
+      "js": ["jquery-3.7.1.min.js", "popper.min.js", "bootstrap/js/bootstrap.min.js", "content.js"],
       "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["modules/*.js"],
+      "resources": ["modules/*.js", "bootstrap/*"],
       "matches": ["*://webcms.sitecore.msu.edu/*", "*://msutoday.msu.edu/*"]
     }
   ]

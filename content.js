@@ -1,6 +1,11 @@
 // content.js
 (async function() {
     try {
+      const bootstrapCSS = document.createElement("link");
+      bootstrapCSS.rel = "stylesheet";
+      bootstrapCSS.href = chrome.runtime.getURL("bootstrap/css/bootstrap.min.css");
+      document.head.appendChild(bootstrapCSS);
+
       // Dynamically import modules
       const { Logger } = await import(chrome.runtime.getURL('modules/logger.js'));
       const { UI } = await import(chrome.runtime.getURL('modules/ui.js'));
