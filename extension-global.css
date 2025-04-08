@@ -1,3 +1,11 @@
 .tooltip {
     z-index: 100001;
 }
+
+.nav-tabs .nav-link.active {
+    color: #198754;
+}
+
+.nav-tabs .nav-link {
+    color: #212529;
+}
