@@ -94,7 +94,6 @@ export class ButtonContainer {
         tabLink.type = 'button';
         tabLink.role = 'tab';
         tabLink.innerText = category;
-        // tabLink.classList.add('text-success');
 
         tabButton.appendChild(tabLink);
         this.tabNav.appendChild(tabButton);
