@@ -22,7 +22,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["modules/*.js", "bootstrap/*"],
+      "resources": ["modules/*.js", "bootstrap/*", "extension-global.css"],
       "matches": ["*://webcms.sitecore.msu.edu/*", "*://msutoday.msu.edu/*"]
     }
   ]

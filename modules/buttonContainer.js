@@ -59,8 +59,9 @@ export class ButtonContainer {
         // Bootstrap tooltip attributes
         button.setAttribute('data-bs-toggle', 'tooltip');
         button.setAttribute('data-bs-placement', 'left');
-        button.setAttribute('title', instructions);
-    
+        button.setAttribute('data-bs-title', instructions);
+        button.setAttribute('type', 'button');
+        
         button.classList.add(...Config.STYLES.actionButton);
     
         button.addEventListener('click', (e) => {
