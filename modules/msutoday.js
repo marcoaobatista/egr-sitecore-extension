@@ -24,6 +24,25 @@ export const MSUTodayHtmlProcessor = {
             if (src?.startsWith('/-/media/')) {
                 img.setAttribute('src', 'https://msutoday.msu.edu' + src);
             }
+
+            // if the lightbox image has a caption, add a green line if not present
+
+            // find the <a> tag
+            const link_location = img.closest('a');
+            console.log(link_location);
+
+            // if an <a> tag was found
+            if (link_location) {
+                // caption placement
+                const caption = link_location.nextElementSibling;
+                console.log(caption);
+                
+                // if the next div is the caption, then add the green line
+                if (caption && caption.tagName === 'DIV') {
+                    caption.classList.add('line');
+                    console.log(caption);
+                }
+            } 
         }
         
         // Create container for appending new elements
