@@ -20,7 +20,8 @@ export const Notification = {
             </div>
         `;
 
-        document.body.appendChild(toast);
+        const shadowHost= document.getElementById("shadowHostRoot").shadowRoot;
+        shadowHost.appendChild(toast);
 
         // Fade in
         setTimeout(() => {

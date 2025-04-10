@@ -3,13 +3,14 @@ import { Config } from './config.js';
 import { Logger } from './logger.js';
 
 export class ButtonContainer {
-    constructor(defaultCategory = 'General') {
+    constructor(defaultCategory = 'News Story', shadowHost) {
         this.defaultCategory = defaultCategory;
         this.isOpen = false;
         this.toggleButton = null;
         this.container = null;
         this.buttons = [];
         this.tabs = {};
+        this.shadowHost = shadowHost;
     }
 
     init() {
@@ -17,10 +18,10 @@ export class ButtonContainer {
         this.createButtonContainer();
         
         this.container.addEventListener('shown.bs.tab', (event) => {
-            const allPanes = this.container.querySelectorAll('.tab-pane');
+            const allPanes = this.shadowHost.querySelectorAll('.tab-pane');
             allPanes.forEach(pane => pane.classList.remove('d-flex'));
         
-            const targetPane = this.container.querySelector(event.target.dataset.bsTarget);
+            const targetPane = this.shadowHost.querySelector(event.target.dataset.bsTarget);
             if (targetPane) targetPane.classList.add('d-flex');
         });
     }
@@ -34,7 +35,7 @@ export class ButtonContainer {
         this.toggleButton.style.right = "30px";
         this.toggleButton.addEventListener('click', () => this.toggle());
 
-        document.body.appendChild(this.toggleButton);
+        this.shadowHost.appendChild(this.toggleButton);
     }
 
     createButtonContainer() {
@@ -58,7 +59,7 @@ export class ButtonContainer {
         this.tabContent = tabContent;
         this.container.appendChild(tabContent);
 
-        document.body.appendChild(this.container);
+        this.shadowHost.appendChild(this.container);
     }
 
     toggle() {
@@ -76,40 +77,50 @@ export class ButtonContainer {
 
     ensureTab(category) {
         if (this.tabs[category]) return;
-
+    
         const isActive = Object.keys(this.tabs).length === 0 && category === this.defaultCategory;
-
         const tabId = `tab-${category.replace(/\s+/g, '-').toLowerCase()}`;
-
+    
         // Create tab button
         const tabButton = document.createElement('li');
         tabButton.className = 'nav-item';
         tabButton.role = 'presentation';
-
+    
         const tabLink = document.createElement('button');
         tabLink.className = 'nav-link' + (isActive ? ' active' : '');
-        tabLink.id = `${tabId}-tab`;
-        tabLink.dataset.bsToggle = 'tab';
-        tabLink.dataset.bsTarget = `#${tabId}`;
         tabLink.type = 'button';
         tabLink.role = 'tab';
         tabLink.innerText = category;
+        tabLink.dataset.tabId = tabId;
+    
+        // Custom tab switch logic
+        tabLink.addEventListener('click', () => {
+            // Remove 'active' from all tabs and content
+            const allLinks = this.shadowHost.querySelectorAll('.nav-link');
+            const allPanes = this.shadowHost.querySelectorAll('.tab-pane');
+            // Remove 'active' from all tabs and content
+            allLinks.forEach(link => link.classList.remove('active'));
+            allPanes.forEach(pane => pane.classList.remove('show', 'active', 'd-flex'));
 
+            // Activate the selected ones
+            tabLink.classList.add('active');
+            tabPane.classList.add('show', 'active', 'd-flex');
+        });
+    
         tabButton.appendChild(tabLink);
         this.tabNav.appendChild(tabButton);
-
+    
         // Create tab content pane
         const tabPane = document.createElement('div');
-        
         tabPane.className = `tab-pane fade ${isActive ? 'show active d-flex' : ''} flex-column gap-2 p-2`;
         tabPane.id = tabId;
         tabPane.role = 'tabpanel';
-
+    
         this.tabContent.appendChild(tabPane);
         this.tabs[category] = tabPane;
     }
 
-    addButton(label, instructions, onClick, category = 'General') {
+    addButton(label, instructions, onClick, category = 'News Story') {
         this.ensureTab(category);
 
         const button = document.createElement('button');

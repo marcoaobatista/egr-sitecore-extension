@@ -35,16 +35,17 @@ const buttons = [
   To use: Open the Content Editor and click this button.`,
       category: "Miscellaneous"
     }
-  ]
+  ];
 
 export const UI = {
     buttonContainer: null,
 
-    init() {
-        this.buttonContainer = new ButtonContainer('News Story');
+    init(shadowHost) {
+        // Initialize button container
+        this.buttonContainer = new ButtonContainer('News Story', shadowHost);
         this.buttonContainer.init();
 
-        // Register buttons
+        // Add buttons to container
         buttons.forEach(button => {
             this.buttonContainer.addButton(button['label'], button['instructions'], button['onClick'], button['category']);
         });
@@ -52,14 +53,14 @@ export const UI = {
         Logger.log('UI initialized');
     },
 
-    start() {
+    start(shadowHost) {
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             Logger.log('DOM ready, running immediately');
-            this.init();
+            this.init(shadowHost);
         } else {
             document.addEventListener('DOMContentLoaded', () => {
                 Logger.log('DOMContentLoaded fired');
-                this.init();
+                this.init(shadowHost);
             });
         }
     }
