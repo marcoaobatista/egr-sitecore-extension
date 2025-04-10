@@ -1,8 +1,19 @@
-// urlGenerator.js
+/**
+ * @fileoverview Utility for generating and copying published URLs for Sitecore content nodes.
+ * Constructs the URL based on the current selection in the Sitecore content tree,
+ * and provides a method to copy the generated URL to the clipboard.
+ */
 import { Logger } from './logger.js';
 import { Notification } from './notification.js';
 
 export const UrlGenerator = {
+    /**
+     * Generates a published URL based on the currently active node in the Sitecore content tree.
+     * Traverses up the tree to build the full path and appends the page title.
+     * Displays notifications if the node is not selected or the path is too short.
+     *
+     * @return {?string} The generated URL string, or null if an error occurs.
+     */
     generatePublishedUrl() {
         try {
             const selectedNode = document.querySelector(".scContentTreeNodeActive");
@@ -44,6 +55,12 @@ export const UrlGenerator = {
         }
     },
 
+    /**
+     * Copies the generated published URL to the clipboard.
+     * Notifies the user on success or failure.
+     *
+     * @return {Promise<void>}
+     */
     async copyToClipboard() {
         const url = this.generatePublishedUrl();
         if (!url) return;

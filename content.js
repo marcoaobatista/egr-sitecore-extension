@@ -1,4 +1,9 @@
-// content.js
+/**
+ * @fileoverview Entry point content script for the browser extension.
+ * Injects a shadow DOM host into the page, loads required CSS and JS dependencies
+ * (e.g., Bootstrap, jQuery), and initializes the UI module within an isolated shadow DOM context.
+ * Also sets up Bootstrap tooltips scoped to the shadow DOM.
+ */
 (async function() {
     try {
       // Create shadow host node
@@ -12,11 +17,6 @@
       extensionCSS.rel = "stylesheet";
       extensionCSS.href = chrome.runtime.getURL("./extension-global.css");
       shadowHost.appendChild(extensionCSS);
-      
-      // Include Popper.js
-      const popperScript = document.createElement("script");
-      popperScript.src = chrome.runtime.getURL("./popper.min.js");
-      document.head.appendChild(popperScript);
       
       // Load Bootstrap Bundle JS (includes Popper)
       const jQueryScript = document.createElement("script");

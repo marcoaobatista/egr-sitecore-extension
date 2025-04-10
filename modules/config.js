@@ -1,4 +1,8 @@
-// config.js
+/**
+ * @fileoverview Centralized configuration object for UI styling, theming, and constants
+ * used across the extension. Includes MSU color definitions, z-index layering,
+ * CSS class groupings for common UI components, and other static configuration values.
+ */
 export const Config = {
     MSU_COLORS: {
         SPARTAN_GREEN: '#18453B',
@@ -26,7 +30,7 @@ export const Config = {
             'position-fixed',
             'shadow-lg'
         ],
-        buttonContainer: [
+        toolbox: [
             'rounded-3', 
             'bg-white', 
             'p-3',

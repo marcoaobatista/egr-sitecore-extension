@@ -1,11 +1,16 @@
-// ui.js
+/**
+ * @fileoverview UI module for initializing the toolbox and action buttons in the extension.
+ * Dynamically injects UI controls and connects them to core logic modules like ClipboardHandler,
+ * MSUTodayProcessor, and others. Ensures setup is delayed until DOM is ready.
+ */
 import { Logger } from './logger.js';
-import { ButtonContainer } from './buttonContainer.js';
+import { Toolbox } from './toolbox.js';
 import { ClipboardHandler } from './clipboardHandler.js';
 import { UrlGenerator } from './urlGenerator.js';
 import { MSUTodayArticleProcessor } from './msutoday.js';
 import { ExpandTree } from './expandTree.js';
 
+// Configuration for UI buttons including their label, instructions, click behavior, and category.
 const buttons = [
     {
       label: 'Process Clipboard HTML',
@@ -38,21 +43,32 @@ const buttons = [
   ];
 
 export const UI = {
-    buttonContainer: null,
+    Toolbox: null,
 
+    /**
+     * Initializes the Toolbox component and registers all UI buttons.
+     *
+     * @param {HTMLElement} shadowHost - The shadow DOM host where the toolbox will be injected.
+     */
     init(shadowHost) {
         // Initialize button container
-        this.buttonContainer = new ButtonContainer('News Story', shadowHost);
-        this.buttonContainer.init();
+        this.Toolbox = new Toolbox(shadowHost);
+        this.Toolbox.init();
 
         // Add buttons to container
         buttons.forEach(button => {
-            this.buttonContainer.addButton(button['label'], button['instructions'], button['onClick'], button['category']);
+            this.Toolbox.addButton(button['label'], button['instructions'], button['onClick'], button['category']);
         });
 
         Logger.log('UI initialized');
     },
 
+    /**
+     * Starts the UI by initializing it once the DOM is fully loaded.
+     * If the DOM is already ready, it runs immediately.
+     *
+     * @param {HTMLElement} shadowHost - The shadow DOM host for the UI components.
+     */
     start(shadowHost) {
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             Logger.log('DOM ready, running immediately');

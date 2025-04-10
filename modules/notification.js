@@ -1,8 +1,23 @@
-// notification.js
+/**
+ * @fileoverview Provides a UI utility for showing temporary notification toasts
+ * using Bootstrap styling inside a shadow DOM. Notifications are accessible,
+ * dismissible, and can auto-hide after a configurable duration.
+ */
 import { Config } from './config.js';
 import { Logger } from './logger.js';
 
+/**
+ * A utility object for displaying temporary notification toasts in the UI.
+ * Provides a method to show dismissible messages with optional auto-hide duration.
+ */
 export const Notification = {
+    /**
+     * Displays a notification toast with the provided message.
+     * The toast automatically fades out after a specified duration, but can also be dismissed manually.
+     *
+     * @param {string} message - The notification message to display.
+     * @param {number=} duration - Duration in milliseconds before auto-dismiss (default is 3000 ms).
+     */
     show(message, duration = 3000) {
         const toast = document.createElement('div');
         toast.classList.add(...Config.STYLES.notification);

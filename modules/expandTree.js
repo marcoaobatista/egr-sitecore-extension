@@ -1,5 +1,12 @@
-// expandTree.js
+/**
+ * @fileoverview Provides a utility to programmatically expand nodes in the Sitecore content tree,
+ * excluding predefined folders that are typically not relevant for routine editing.
+ */
 export const ExpandTree = {
+    /**
+     * Expands all collapsed Sitecore content tree nodes except those listed in the exclusion array.
+     * Nodes are identified by their label text and a collapsed tree glyph image.
+     */
     expand(){
         const excludedNodes = [
             'Global Configurations',
@@ -8,8 +15,8 @@ export const ExpandTree = {
             'Global Components',
             'Media Library',
             'Page Components',
-        'Faculty Items',
-        'Job Cards'
+            'Faculty Items',
+            'Job Cards'
         ];
         
         document.querySelectorAll('.scContentTreeNode').forEach(node => {

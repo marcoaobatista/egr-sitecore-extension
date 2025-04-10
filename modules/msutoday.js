@@ -1,8 +1,19 @@
-// msutoday.js
+/**
+ * @fileoverview Provides specialized formatting utilities for MSUToday articles.
+ * Includes logic for rewriting media URLs, and appending standard footers to 
+ * article content. Also supports copying processed HTML to clipboard.
+ */
 import { Logger } from './logger.js';
 import { Notification } from './notification.js';
 
 export const MSUTodayHtmlProcessor = {
+    /**
+     * Formats raw HTML from MSUToday articles. Rewrites relative media URLs to absolute,
+     * adds green line styling to image captions when present, and appends standard footer paragraphs.
+     *
+     * @param {string} html - Raw HTML string from article content.
+     * @return {string} Cleaned and enhanced HTML string.
+     */
     formatHTML(html) {
         // Create a temporary DOM element to parse the HTML
         const parser = new DOMParser();
@@ -65,6 +76,10 @@ export const MSUTodayHtmlProcessor = {
 };
 
 export const MSUTodayArticleProcessor = {
+    /**
+     * Extracts article content from the page, processes it with MSUTodayHtmlProcessor,
+     * and writes the formatted HTML to the clipboard. Displays notifications for success or failure.
+     */
     processAndCopy() {
         const articleContent = document.querySelector('.article-content');
         if (!articleContent) {
