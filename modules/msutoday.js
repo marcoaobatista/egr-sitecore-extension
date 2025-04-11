@@ -91,6 +91,7 @@ export const MSUTodayArticleProcessor = {
 
         navigator.clipboard.writeText(formattedHTML)
             .then(() => {
+                ResultsBox.show('MSUToday Article HTML', cleanedHtml);
                 Notification.show('Formatted article content copied to clipboard.', 3000);
             })
             .catch(err => {

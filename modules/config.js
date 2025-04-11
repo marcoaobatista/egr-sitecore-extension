@@ -2,6 +2,8 @@
  * @fileoverview Centralized configuration object for UI styling, theming, and constants
  * used across the extension. Includes MSU color definitions, z-index layering,
  * CSS class groupings for common UI components, and other static configuration values.
+ * 
+ * @see https://getbootstrap.com/ — Bootstrap framework used for UI styling and components
  */
 export const Config = {
     MSU_COLORS: {
@@ -12,6 +14,17 @@ export const Config = {
     },
     Z_INDEX: "100000",
     STYLES: {
+        resultsBox: [
+            'align-items-center',
+            'border-0',
+            'position-fixed',
+            'top-0',
+            'start-0',
+            'm-4',
+            'fade',
+            'h-50',
+            'shadow-lg'
+        ],
         notification: [
             'toast',
             'align-items-center',

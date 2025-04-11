@@ -6,6 +6,7 @@
 import { Logger } from './logger.js';
 import { HtmlProcessor } from './htmlProcessor.js';
 import { Notification } from './notification.js';
+import { ResultsBox } from './resultsBox.js';
 
 export const ClipboardHandler = {
     /**
@@ -25,6 +26,9 @@ export const ClipboardHandler = {
 
             Logger.log('Original clipboard content:', clipboardText);
             const cleanedHtml = HtmlProcessor.process(clipboardText);
+
+            ResultsBox.show('Processed HTML', cleanedHtml);
+
             Logger.log('Processed HTML:', cleanedHtml);
 
             await navigator.clipboard.writeText(cleanedHtml);
